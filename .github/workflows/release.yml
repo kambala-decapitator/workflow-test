@@ -15,9 +15,9 @@ jobs:
       - uses: ncipollo/release-action@v1
         id: release
         with:
-          allowUpdates: true
+#           allowUpdates: true
           tag: ${{ inputs.newVersion }}
-          commit: main
+#           commit: main
           draft: true
 
       - name: release outputs
@@ -26,11 +26,9 @@ jobs:
       - name: create artifact
         run: date > 1.txt
 
-      - uses: ncipollo/release-action@v1
+      - uses: tubone24/update_release@v1.3.1
         name: add artifact
         with:
-          allowUpdates: true
-          tag: ${{ inputs.newVersion }}
-          commit: main
-          artifacts: 1.txt
           draft: false
+        env:
+          TAG_NAME: ${{ inputs.newVersion }}
