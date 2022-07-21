@@ -19,7 +19,7 @@ jobs:
           draft: true
 
       - name: release outputs
-        run: echo ${{ release.outputs.id }} ${{ release.outputs.upload_url }}
+        run: echo ${{ steps.release.outputs.id }} ${{ steps.release.outputs.upload_url }}
 
       - name: create artifact
         run: echo 42 > 1.txt
