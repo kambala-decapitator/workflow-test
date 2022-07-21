@@ -24,11 +24,12 @@ jobs:
         run: echo ${{ steps.release.outputs.id }} ${{ steps.release.outputs.upload_url }}
 
       - name: create artifact
-        run: date > 1.txt
+        run: sleep 30 ; date > 1.txt
 
-      - uses: tubone24/update_release@v1.3.1
+      - uses: ncipollo/release-action@v1
         name: add artifact
         with:
+          allowUpdates: true
+          tag: ${{ inputs.newVersion }}
           draft: false
-        env:
-          TAG_NAME: ${{ inputs.newVersion }}
+          artifacts: 1.txt
