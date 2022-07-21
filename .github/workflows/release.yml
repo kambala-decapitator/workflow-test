@@ -15,6 +15,7 @@ jobs:
       - uses: ncipollo/release-action@v1
         id: release
         with:
+          allowUpdates: true
           tag: ${{ inputs.newVersion }}
           draft: true
 
@@ -22,12 +23,11 @@ jobs:
         run: echo ${{ steps.release.outputs.id }} ${{ steps.release.outputs.upload_url }}
 
       - name: create artifact
-        run: echo 42 > 1.txt
+        run: date > 1.txt
 
       - uses: ncipollo/release-action@v1
         name: add artifact
         with:
-          allowUpdates: true
           tag: ${{ inputs.newVersion }}
           artifacts: 1.txt
           draft: false
