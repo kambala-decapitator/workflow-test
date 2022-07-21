@@ -1,0 +1,33 @@
+name: CI
+on:
+  workflow_dispatch:
+    inputs:
+      newVersion:
+        type: string
+        description: 'Release version'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: ncipollo/release-action@v1
+        id: release
+        with:
+          tag: ${{ inputs.newVersion }}
+          draft: true
+
+      - name: release outputs
+        run: echo ${{ release.outputs.id }} ${{ release.outputs.upload_url }}
+
+      - name: create artifact
+        run: echo 42 > 1.txt
+
+      - uses: ncipollo/release-action@v1
+        name: add artifact
+        with:
+          allowUpdates: true
+          tag: ${{ inputs.newVersion }}
+          artifacts: 1.txt
+          draft: false
