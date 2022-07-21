@@ -17,6 +17,7 @@ jobs:
         with:
           allowUpdates: true
           tag: ${{ inputs.newVersion }}
+          commit: main
           draft: true
 
       - name: release outputs
@@ -28,6 +29,8 @@ jobs:
       - uses: ncipollo/release-action@v1
         name: add artifact
         with:
+          allowUpdates: true
           tag: ${{ inputs.newVersion }}
+          commit: main
           artifacts: 1.txt
           draft: false
