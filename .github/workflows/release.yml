@@ -25,11 +25,13 @@ jobs:
 
       - name: create artifact
         run: sleep 30 ; date > 1.txt
+        
+      - name: add artifact
+        run: 'curl -d @1.txt -H "Accept: application/vnd.github+json" -H "Authorization: token ${{ github.token }}" ${{ steps.release.outputs.upload_url }}'
 
       - uses: ncipollo/release-action@v1
-        name: add artifact
+        name: publish release
         with:
           allowUpdates: true
           tag: ${{ inputs.newVersion }}
           draft: false
-          artifacts: 1.txt
