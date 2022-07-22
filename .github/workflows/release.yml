@@ -23,6 +23,7 @@ jobs:
       - run: |
           echo "env $TAG"
           echo 'literal ${{ env.TAG }}'
+        if: github.ref_type == 'tag'
       - uses: ncipollo/release-action@v1
         id: release
         with:
