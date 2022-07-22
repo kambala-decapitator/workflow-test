@@ -6,6 +6,11 @@ on:
         type: string
         description: 'Release version'
         required: true
+  push:
+    tags:
+    - '*'
+env:
+  TAG: ${{ inputs.newVersion || github.ref }}
 
 jobs:
   build:
@@ -15,10 +20,13 @@ jobs:
         shell: bash
 
     steps:
+      - run: |
+          echo "env $TAG"
+          echo 'literal ${{ env.TAG }}'
       - uses: ncipollo/release-action@v1
         id: release
         with:
-          tag: ${{ inputs.newVersion }}
+          tag: ${{ env.TAG }}
           draft: true
 
       - name: release outputs
@@ -38,5 +46,5 @@ jobs:
         name: publish release
         with:
           allowUpdates: true
-          tag: ${{ inputs.newVersion }}
+          tag: ${{ env.TAG }}
           draft: false
