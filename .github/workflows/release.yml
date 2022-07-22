@@ -25,12 +25,12 @@ jobs:
         run: echo ${{ steps.release.outputs.id }} '${{ steps.release.outputs.upload_url }}'
 
       - name: create artifact
-        run: sleep 30 ; date > 1.txt
+        run: sleep 10 ; date > 1.txt
 
       - name: add artifact
         run: |
           set -x
-          uploadURL=$(sed 's/{?name,label}/?name=myfile.txt/')
+          uploadURL=$(sed 's/{?name,label}/?name=myfile.txt/' <<<'${{ steps.release.outputs.upload_url }}')
           echo "$uploadURL"
           curl -d @1.txt -H 'Content-Type: application/octet-stream' -H 'Authorization: token ${{ github.token }}' "$uploadURL"
 
