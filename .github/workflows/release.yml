@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - uses: ncipollo/release-action@v1
@@ -26,6 +29,7 @@ jobs:
 
       - name: add artifact
         run: |
+          set -x
           uploadURL=$(sed 's/{?name,label}/?name=myfile.txt/')
           echo "$uploadURL"
           curl -d @1.txt -H 'Content-Type: application/octet-stream' -H 'Authorization: token ${{ github.token }}' "$uploadURL"
