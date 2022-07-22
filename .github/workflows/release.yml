@@ -10,7 +10,7 @@ on:
     tags:
     - '*'
 env:
-  TAG: ${{ inputs.newVersion || github.ref }}
+  TAG: ${{ inputs.newVersion || github.ref_name }}
 
 jobs:
   build:
