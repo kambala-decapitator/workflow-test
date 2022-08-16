@@ -21,6 +21,8 @@ jobs:
         run: |
           set +e
           set -x
-          which dyldinfo
-          xcrun -f dyldinfo
-          xcrun dyldinfo
+          git clone --no-checkout --depth 1 --sparse https://github.com/kambala-decapitator/Qt5-iOS-patches.git
+          git sparse-checkout add 5.15.5
+          git checkout
+          ls -l
+          ls -l 5.15.5
