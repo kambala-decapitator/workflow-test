@@ -22,6 +22,7 @@ jobs:
           set +e
           set -x
           git clone --no-checkout --depth 1 --sparse https://github.com/kambala-decapitator/Qt5-iOS-patches.git
+          cd Qt5-iOS-patches
           git sparse-checkout add 5.15.5
           git checkout
           ls -l
