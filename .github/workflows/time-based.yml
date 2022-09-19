@@ -27,7 +27,7 @@ jobs:
       - run: |
           if [ ${{ fromJson(steps.get_last_scheduled_run.outputs.data).total_count }} -gt 0 ]; then
             echo already built, will cancel
-            echo "CANCEL_RUN=1" >> "$GITHUB_ENV"
+            #echo '::set-output name=SELECTED_COLOR::green'
           fi
 #       - name: GitHub API Request
 #         if: env.CANCEL_RUN == 1
@@ -39,12 +39,10 @@ jobs:
 #           run_id: ${{ github.run_id }}
 #         env:
 #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: exit 1
-        if: env.CANCEL_RUN == 1
 
   build:
+    if: github.event_name == 'workflow_dispatch'
     needs: check_last_build
-    if: needs.check_last_build.result != 'failure'
     runs-on: ubuntu-latest
     steps:
       # Runs a single command using the runners shell
