@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "GITHUB_REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
-          echo checking '${{ github.event.repository.name }}' / "$GITHUB_REPOSITORY_NAME"
+          echo "GITHUB_REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" >> "$GITHUB_ENV"
       - name: GitHub API Request
         uses: octokit/request-action@v2.1.0
         id: get_last_scheduled_run
@@ -26,9 +25,23 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: |
-          echo ${{ steps.get_last_scheduled_run.outputs.status }}: '${{ steps.get_last_scheduled_run.outputs.data }}'
+          if [ ${{ fromJson(steps.get_last_scheduled_run.outputs.data).total_count }} -gt 0 ]; then
+            echo already built, will cancel
+            echo "CANCEL_RUN=1" >> "$GITHUB_ENV"
+          fi
+      - name: GitHub API Request
+        if: env.CANCEL_RUN == 1
+        uses: octokit/request-action@v2.1.0
+        with:
+          route: POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel
+          owner: ${{ github.repository_owner }}
+          repo: ${{ env.GITHUB_REPOSITORY_NAME }}
+          run_id: ${{ github.run_id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build:
+    if: env.CANCEL_RUN != 1
     runs-on: ubuntu-latest
     steps:
       # Runs a single command using the runners shell
