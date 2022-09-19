@@ -41,7 +41,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build:
-    if: env.CANCEL_RUN != 1
+    if: ${{ env.CANCEL_RUN != 1 }}
     runs-on: ubuntu-latest
     steps:
       # Runs a single command using the runners shell
