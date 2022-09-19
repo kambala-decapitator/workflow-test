@@ -1,0 +1,36 @@
+name: time-based
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/6 * * * *'
+
+jobs:
+  check_last_build:
+    if: github.event.schedule != ''
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "GITHUB_REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+          echo checking '${{ github.event.repository.name }}' / "$GITHUB_REPOSITORY_NAME"
+      - name: GitHub API Request
+        uses: octokit/request-action@v2.1.0
+        id: get_last_scheduled_run
+        with:
+          route: GET /repos/{owner}/{repo}/actions/runs
+          owner: ${{ github.repository_owner }}
+          repo: ${{ env.GITHUB_REPOSITORY_NAME }}
+          event: schedule
+          status: success
+          head_sha: ${{ github.sha }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          echo ${{ steps.get_last_scheduled_run.outputs.status }}: '${{ steps.get_last_scheduled_run.outputs.data }}'
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
