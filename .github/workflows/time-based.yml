@@ -27,6 +27,7 @@ jobs:
       - run: |
           if [ ${{ fromJson(steps.get_last_scheduled_run.outputs.data).total_count }} -gt 0 ]; then
             echo already built, will cancel
+            exit 1
             #echo '::set-output name=SELECTED_COLOR::green'
           fi
 #       - name: GitHub API Request
@@ -41,8 +42,9 @@ jobs:
 #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build:
-    if: github.event_name == 'workflow_dispatch'
     needs: check_last_build
+    if: always() && needs.check_last_build.result != 'failure'
+#     if: github.event_name == 'workflow_dispatch' || 
     runs-on: ubuntu-latest
     steps:
       # Runs a single command using the runners shell
