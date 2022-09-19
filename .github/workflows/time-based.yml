@@ -47,7 +47,7 @@ jobs:
 
   build:
     needs: check_last_build
-    if: always() && needs.check_last_build.perform_build == 'true'
+    if: always() && needs.check_last_build.perform_build != 'false'
     runs-on: ubuntu-latest
     steps:
       - name: Run a one-line script
