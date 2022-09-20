@@ -2,8 +2,8 @@ name: time-based
 
 on:
   workflow_dispatch:
-  #schedule:
-    #- cron: '*/6 * * * *'
+  schedule:
+    - cron: '*/6 * * * *'
 
 jobs:
   check_last_build:
@@ -44,6 +44,7 @@ jobs:
           run_id: ${{ github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: sleep 60
 
   build:
     needs: check_last_build
