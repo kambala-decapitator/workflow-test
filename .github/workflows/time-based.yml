@@ -14,7 +14,7 @@ jobs:
     steps:
       - run: |
           echo "GITHUB_REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" >> "$GITHUB_ENV"
-      - name: GitHub API Request
+      - name: GitHub API Request ${{ github.sha }}
         uses: octokit/request-action@v2.1.0
         id: get_last_scheduled_run
         with:
