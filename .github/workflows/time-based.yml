@@ -21,7 +21,6 @@ jobs:
           route: GET /repos/{owner}/{repo}/actions/runs
           owner: ${{ github.repository_owner }}
           repo: ${{ env.GITHUB_REPOSITORY_NAME }}
-          event: schedule
           status: success
           head_sha: ${{ github.sha }}
         env:
