@@ -33,9 +33,9 @@ jobs:
       - id: check_if_built
         run: |
           if [ ${{ fromJson(steps.get_last_scheduled_run.outputs.data).total_count }} -gt 0 ]; then
-            echo '::set-output name=skip_build::0'
-          else
             echo '::set-output name=skip_build::1'
+          else
+            echo '::set-output name=skip_build::0'
           fi
       - name: Cancel current run
         if: steps.check_if_built.outputs.skip_build == 1
