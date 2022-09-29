@@ -2,8 +2,8 @@ name: time-based
 
 on:
   workflow_dispatch:
-#   schedule:
-#     - cron: '*/6 * * * *'
+  schedule:
+    - cron: '*/6 * * * *'
 
 jobs:
   check_last_build:
@@ -37,19 +37,19 @@ jobs:
           else
             echo '::set-output name=skip_build::0'
           fi
-      - name: Cancel current run
-        if: steps.check_if_built.outputs.skip_build == 1
-        uses: octokit/request-action@v2.1.0
-        with:
-          route: POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel
-          owner: ${{ github.repository_owner }}
-          repo: ${{ steps.get_repo_name.outputs.value }}
-          run_id: ${{ github.run_id }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Wait for the run to be cancelled
-        if: steps.check_if_built.outputs.skip_build == 1
-        run: sleep 60
+#       - name: Cancel current run
+#         if: steps.check_if_built.outputs.skip_build == 1
+#         uses: octokit/request-action@v2.1.0
+#         with:
+#           route: POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel
+#           owner: ${{ github.repository_owner }}
+#           repo: ${{ steps.get_repo_name.outputs.value }}
+#           run_id: ${{ github.run_id }}
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Wait for the run to be cancelled
+#         if: steps.check_if_built.outputs.skip_build == 1
+#         run: sleep 60
 
   build:
     needs: check_last_build
