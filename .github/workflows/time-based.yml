@@ -2,8 +2,8 @@ name: time-based
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '*/6 * * * *'
+#   schedule:
+#     - cron: '*/6 * * * *'
 
 jobs:
   check_last_build:
