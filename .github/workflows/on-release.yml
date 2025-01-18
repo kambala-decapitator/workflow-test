@@ -1,12 +1,13 @@
+name: Notify other repos of release
 on:
   release:
     types: [published]
 jobs:
   notify_repos:
+    if: ${{ !github.event.release.prerelease }}
     runs-on: ubuntu-latest
     steps:
       - name: Repository Dispatch only for releases
-        if: ${{ !github.event.release.prerelease }}
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.EXT_REPO_PAT }}
