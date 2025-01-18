@@ -1,6 +1,6 @@
 on:
   release:
-    types: [released]
+    types: [published]
 jobs:
   notify_repos:
     runs-on: ubuntu-latest
