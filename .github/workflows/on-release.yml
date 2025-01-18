@@ -1,0 +1,14 @@
+on:
+  release:
+    types: [released]
+jobs:
+  notify_repos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.EXT_REPO_PAT }}
+          repository: kambala-decapitator/repository_dispatch_test
+          event-type: on-release
+          client-payload: '{"github": ${{ toJson(github) }}}'
