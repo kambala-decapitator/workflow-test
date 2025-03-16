@@ -24,8 +24,8 @@ jobs:
           #done
           conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph.json --no-remote
           jq -c 'del(.graph.nodes[] | select(.context == "host"))' graph.json > graph_build.json
-          conan remove --confirm -l graph_build.json
-          #conan list -f json --out-file list.json -c -g graph.json
+          conan list -f json --out-file list.json -c -g graph_build.json
+          conan remove --confirm -l list.json
           conan cache clean
           conan cache save --file cache_all.tgz '*:*'
 
