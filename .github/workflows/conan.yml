@@ -11,11 +11,11 @@ jobs:
       - run: |
           pip install conan
           conan profile detect
+          conan install --requires freetype/2.13.2 -b missing --lockfile-out conan.lock -of 1
 
       - name: Run conan
         run: |
           set -x
-          conan install --requires freetype/2.13.2 -b missing --lockfile-out conan.lock -of 1
           conan list -f compact | tail -n +2
           #conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph_context.json --no-remote --filter=context
           #buildPackages=$(jq -r '.graph.nodes[] | select(.context == "build") | .ref' graph_context.json | sort | uniq)
@@ -23,11 +23,14 @@ jobs:
           #  conan remove --confirm "$p:*"
           #done
           conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph.json --no-remote
-          jq -c 'del(.graph.nodes[] | select(.context == "host"))' graph.json > graph_build.json
-          conan list -f json --out-file list.json -c -g graph_build.json
-          conan remove --confirm -l list.json
+          #jq -c 'del(.graph.nodes[] | select(.context == "host"))' graph.json > graph_build.json
+          #conan list -f json --out-file list.json -c -g graph_build.json
+          #conan remove --confirm -l list.json
           conan cache clean
-          conan cache save --file cache_all.tgz '*:*'
+          #conan cache save --file cache_all.tgz '*:*'
+          jq -c 'del(.graph.nodes[] | select(.context == "build"))' graph.json > graph_host.json
+          conan list -f json --out-file list.json -c -g graph_host.json
+          conan cache save --file cache_all.tgz -l list.json
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.6.1
