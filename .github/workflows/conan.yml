@@ -17,12 +17,14 @@ jobs:
           set -x
           conan install --requires freetype/2.13.2 -b missing --lockfile-out conan.lock -of 1
           conan list -f compact | tail -n +2
-          conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph_context.json --no-remote --filter=context
-          buildPackages=$(jq -r '.graph.nodes[] | select(.context == "build") | .ref' graph_context.json | sort | uniq)
-          for p in $buildPackages ; do
-            conan remove --confirm "$p:*"
-          done
-          conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph_host.json --no-remote
+          #conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph_context.json --no-remote --filter=context
+          #buildPackages=$(jq -r '.graph.nodes[] | select(.context == "build") | .ref' graph_context.json | sort | uniq)
+          #for p in $buildPackages ; do
+          #  conan remove --confirm "$p:*"
+          #done
+          conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph.json --no-remote
+          jq -c 'del(.graph.nodes[] | select(.context == "host"))' graph.json > graph_build.json
+          conan remove --confirm -l graph_build.json
           #conan list -f json --out-file list.json -c -g graph.json
           conan cache clean
           conan cache save --file cache_all.tgz '*:*'
