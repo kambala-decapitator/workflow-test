@@ -1,0 +1,31 @@
+name: conan
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: pip install conan
+
+      - name: Run conan
+        run: |
+          set -x
+          conan profile detect
+          conan install --requires freetype/2.13.2 -b missing -l conan.lock -of 1
+          ls -l 1
+          conan list -f compact
+          conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph.json --no-remote
+          conan list -f json --out-file list.json -c -g graph.json
+          conan cache save --file cache.tgz '*'
+          conan cache save --file cache_all.tgz '*:*'
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.6.1
+        with:
+          path: |
+            *.json
+            *.tgz
+            conan.lock
