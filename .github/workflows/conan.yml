@@ -14,7 +14,7 @@ jobs:
         run: |
           set -x
           conan profile detect
-          conan install --requires freetype/2.13.2 -b missing -l conan.lock -of 1
+          conan install --requires freetype/2.13.2 -b missing --lockfile-out conan.lock -of 1
           ls -l 1
           conan list -f compact
           conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph.json --no-remote
