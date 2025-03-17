@@ -14,6 +14,7 @@ jobs:
           conan install --requires freetype/2.13.2 -b missing --lockfile-out conan.lock -of 1
 
       - name: Run conan
+        shell: bash
         run: |
           set -x
           conan list -f compact | tail -n +2
