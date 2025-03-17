@@ -1,12 +1,12 @@
 name: conan
 on:
-  #push:
-  #  branches: ["main"]
+  push:
+   branches: ["main"]
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - run: |
           pip install conan
@@ -19,7 +19,10 @@ jobs:
           conan list -f compact | tail -n +2
           conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph_context.json --no-remote --filter=context
           buildPackages=$(jq -r '.graph.nodes[] | select(.context == "build") | .ref' graph_context.json | sort | uniq)
+          printf '%s' $buildPackages | xxd
+          printf '%s' "$buildPackages" | xxd
           for p in $buildPackages ; do
+            echo "'$p'"
             conan remove --confirm "$p:*"
           done
 
@@ -35,6 +38,7 @@ jobs:
           #conan cache save --file cache_all.tgz -l list.json
 
       - name: Upload a Build Artifact
+        if: always()
         uses: actions/upload-artifact@v4.6.1
         with:
           path: |
