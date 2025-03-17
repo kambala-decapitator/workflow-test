@@ -19,7 +19,7 @@ jobs:
           set -x
           conan list -f compact | tail -n +2
           conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph_context.json --no-remote --filter=context
-          buildPackages=$(jq -r '.graph.nodes[] | select(.context == "build") | .ref' graph_context.json | sort | uniq)
+          buildPackages=$(jq -rb '.graph.nodes[] | select(.context == "build") | .ref' graph_context.json | sort | uniq)
           printf '%s' $buildPackages | xxd
           printf '%s' "$buildPackages" | xxd
           for p in $buildPackages ; do
