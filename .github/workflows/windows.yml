@@ -9,5 +9,15 @@ jobs:
     runs-on: windows-latest
     steps:
       - run: |
-          Get-Command curl
-          Get-Command wget
+          ninjaDir='ninja'
+          mkdir "$ninjaDir"
+          echo "$(pwd)/$ninjaDir" >> "$GITHUB_PATH"
+
+          zipFile=$(mktemp)
+          curl -L -o "$zipFile" https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-win.zip
+          unzip -q -d "$ninjaDir" "$zipFile"
+          rm "$zipFile"
+
+          ls -l "$ninjaDir"
+          "$ninjaDir/ninja.exe" -v
+        shell: bash
