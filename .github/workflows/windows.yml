@@ -9,4 +9,5 @@ jobs:
     runs-on: windows-latest
     steps:
       - run: |
-          (Get-Command curl -ErrorAction SilentlyContinue).Source -or (Get-Command wget -ErrorAction SilentlyContinue).Source -or "Neither curl nor wget is installed."
+          Get-Command curl
+          Get-Command wget
