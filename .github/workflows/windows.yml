@@ -10,7 +10,7 @@ jobs:
     steps:
       - run: where perl
         shell: cmd
-      - run: which perl
+      - run: which -a perl
         shell: bash
 
       - run: |
