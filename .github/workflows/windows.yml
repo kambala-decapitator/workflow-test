@@ -9,6 +9,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - run: |
+          cmd /c 'cd ; dir'
+          cmd /c 'where ninja'
+        shell: bash
+      
+      - run: |
           which ninja
           ninjaDir='ninja'
           mkdir "$ninjaDir"
@@ -23,3 +28,4 @@ jobs:
           ls -l "$ninjaDir"
           "$ninjaDir/ninja.exe" -h
         shell: bash
+        if: never()
