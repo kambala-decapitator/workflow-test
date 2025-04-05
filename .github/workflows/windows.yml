@@ -1,7 +1,7 @@
 name: windows
 on:
-  # push:
-  #  branches: ["main"]
+  push:
+   branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -28,4 +28,4 @@ jobs:
           ls -l "$ninjaDir"
           "$ninjaDir/ninja.exe" -h
         shell: bash
-        if: never()
+        if: ${{ !always() }}
