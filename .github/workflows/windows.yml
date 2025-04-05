@@ -9,8 +9,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - run: |
-          cmd /c 'cd ; dir'
-          cmd /c 'where ninja'
+          set -x
+          cmd /c '"cd ; dir"'
+          cmd /c '"where ninja"'
         shell: bash
       
       - run: |
