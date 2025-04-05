@@ -10,8 +10,8 @@ jobs:
     steps:
       - run: |
           set -x
-          cmd //c '"cd ; dir"'
-          cmd //c '"where ninja"'
+          cmd //c 'cd ; dir'
+          cmd //c 'where ninja'
         shell: bash
       
       - run: |
