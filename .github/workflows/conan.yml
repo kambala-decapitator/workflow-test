@@ -11,16 +11,20 @@ jobs:
       - run: |
           pip install conan
           conan profile detect
-          conan install --requires freetype/2.13.2 -b missing --lockfile-out conan.lock -of 1
+          conan install --requires freetype/2.13.2 -pr default -b missing --lockfile-out conan.lock -of 1
 
       - name: Run conan
         shell: bash
         run: |
           set -x
           conan list -f compact | tail -n +2
-          conan graph info --requires freetype/2.13.2 -f json --build=never --no-remote --filter=context > graph_context.json
-          echo "JSON:"
-          cat graph_context.json
+          conan graph info --requires freetype/2.13.2 -pr default -f json --build=never --no-remote --filter=context > graph_context.json
+          #cat graph_context.json
+          conan list \
+            --graph graph_context.json \
+            --graph-context=build-only \
+            --format=json \
+            > pkglist.json
           exit 0
           buildPackages=$(jq -rb '.graph.nodes[] | select(.context == "build") | .ref' graph_context.json | sort | uniq)
           printf '%s' $buildPackages | xxd
