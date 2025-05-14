@@ -18,7 +18,8 @@ jobs:
         run: |
           set -x
           conan list -f compact | tail -n +2
-          conan graph info --requires freetype/2.13.2 -pr default -f json --build=never --no-remote --filter=context --out-file graph_context.json
+          # --filter=context
+          conan graph info --requires freetype/2.13.2 -pr default -f json --build=never --no-remote > graph_context.json
           #cat graph_context.json
           conan list \
             --graph=graph_context.json \
