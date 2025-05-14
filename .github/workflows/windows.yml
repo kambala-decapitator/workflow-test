@@ -13,6 +13,7 @@ jobs:
       # - run: which -a perl
       #   shell: bash
 
+      - uses: actions/checkout@v4
       - run: |
           pip install conan
           conan profile detect
