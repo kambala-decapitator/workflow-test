@@ -8,24 +8,14 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - run: where perl
-        shell: cmd
-      - run: which -a perl
-        shell: bash
+      # - run: where perl
+      #   shell: cmd
+      # - run: which -a perl
+      #   shell: bash
 
       - run: |
-          which ninja
-          ninjaDir='ninja'
-          mkdir "$ninjaDir"
-          echo "$(pwd)/$ninjaDir" >> "$GITHUB_PATH"
-
-          zipFile=$(mktemp)
-          curl -L -o "$zipFile" https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-win.zip
-          unzip -q -d "$ninjaDir" "$zipFile"
-          rm "$zipFile"
-
-          which ninja
-          ls -l "$ninjaDir"
-          "$ninjaDir/ninja.exe" -h
+          pip install conan
+          conan profile detect
+          conan install --require ffmpeg/7.1.1 --build=ffmpeg -of 1
         shell: bash
-        if: ${{ !always() }}
+        # if: ${{ !always() }}
