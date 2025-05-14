@@ -19,7 +19,12 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          python3 --version
-          env
-          pip3 install conan
-          which conan
+          packageList='qwe
+          asd'
+          echo "CONAN_PACKAGES<<EOF
+          $packageList
+          EOF" >> $GITHUB_ENV
+      - name: print
+        run: |
+          echo "var1: $CONAN_PACKAGES"
+          echo "var2: ${{ env.CONAN_PACKAGES }}"
