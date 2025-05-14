@@ -16,6 +16,6 @@ jobs:
       - run: |
           pip install conan
           conan profile detect
-          conan install --require ffmpeg/7.1.1 --build=ffmpeg -of 1
+          conan install --requires ffmpeg/7.1.1 --build="ffmpeg/*" -of 1
         shell: bash
         # if: ${{ !always() }}
