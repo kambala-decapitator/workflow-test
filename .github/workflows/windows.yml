@@ -17,6 +17,7 @@ jobs:
           pip install conan
           conan profile detect
           conan install --requires ffmpeg/7.1.1 --build="ffmpeg/*" -of 1 \
-            -o 'ffmpeg/*:shared=True' -o 'zlib/*:shared=True'
+            -o 'ffmpeg/*:shared=True' -o 'zlib/*:shared=True' \
+            -c "tools.build:defines=['_WIN32_WINNT=0x0601', 'WINVER=0x0601', 'NTDDI_VERSION=0x06010000']"
         shell: bash
         # if: ${{ !always() }}
