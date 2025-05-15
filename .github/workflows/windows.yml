@@ -23,9 +23,6 @@ jobs:
       
       - name: conan create minizip
         run: |
-          pip install conan
-          conan profile detect
-          
           cciRepo='conan-center-index'
           branchName='master'
   
