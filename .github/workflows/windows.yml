@@ -14,13 +14,39 @@ jobs:
       #   shell: bash
 
       - uses: actions/checkout@v4
-      - run: |
+      
+      - name: install conan
+        run: |
           pip install conan
           conan profile detect
         shell: bash
-      - name: install zlib
+      
+      - name: conan create minizip
         run: |
-          conan install --requires zlib/1.3.1 --build=missing -pr ./msvc-x64 -of 1
+          pip install conan
+          conan profile detect
+          
+          cciRepo='conan-center-index'
+          branchName='master'
+  
+          git clone "https://github.com/conan-io/$cciRepo.git" \
+            --branch "$branchName" \
+            --no-checkout \
+            --depth 1 \
+            --no-tags \
+            --single-branch \
+            --sparse
+          cd "$cciRepo"
+          git sparse-checkout set recipes/minizip
+          git checkout
+
+          conan create recipes/minizip/all --version=1.3.1 -pr ../msvc-x64 --test-folder=
+        shell: bash
+      
+      # - name: install zlib
+      #   run: |
+      #     conan install --requires zlib/1.3.1 --build=missing -pr ./msvc-x64 -of 1
+      
       - name: install ffmpeg
         run: |
           conan install --requires ffmpeg/7.1.1 --build=missing -pr ./msvc-x64 -of 1
