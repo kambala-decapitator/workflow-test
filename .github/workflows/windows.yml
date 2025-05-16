@@ -16,10 +16,11 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: install conan
-        run: |
-          pip install conan
-          conan profile detect
-        shell: bash
+        uses: conan-io/setup-conan@v1
+        # run: |
+        #   pip install conan
+        #   conan profile detect
+        # shell: bash
       
       # - name: conan create minizip
       #   run: |
@@ -47,7 +48,7 @@ jobs:
       - name: install ffmpeg
         run: |
           echo "CONAN_HOME=$(conan config home)" >> $GITHUB_ENV
-          conan install --requires ffmpeg/7.1.1 --build=missing -pr ./msvc-x64 -of 1
+          conan install --requires ffmpeg/7.1.1 --build="ffmpeg/*" -of 1 # -pr ./msvc-x64
         shell: bash
         # if: ${{ !always() }}
 
