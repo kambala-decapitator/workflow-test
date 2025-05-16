@@ -21,24 +21,24 @@ jobs:
           conan profile detect
         shell: bash
       
-      - name: conan create minizip
-        run: |
-          cciRepo='conan-center-index'
-          branchName='master'
+      # - name: conan create minizip
+      #   run: |
+      #     cciRepo='conan-center-index'
+      #     branchName='master'
   
-          git clone "https://github.com/conan-io/$cciRepo.git" \
-            --branch "$branchName" \
-            --no-checkout \
-            --depth 1 \
-            --no-tags \
-            --single-branch \
-            --sparse
-          cd "$cciRepo"
-          git sparse-checkout set recipes/minizip
-          git checkout
+      #     git clone "https://github.com/conan-io/$cciRepo.git" \
+      #       --branch "$branchName" \
+      #       --no-checkout \
+      #       --depth 1 \
+      #       --no-tags \
+      #       --single-branch \
+      #       --sparse
+      #     cd "$cciRepo"
+      #     git sparse-checkout set recipes/minizip
+      #     git checkout
 
-          conan create recipes/minizip/all --version=1.3.1 -pr ../msvc-x64 --test-folder=
-        shell: bash
+      #     conan create recipes/minizip/all --version=1.3.1 -pr ../msvc-x64 --test-folder=
+      #   shell: bash
       
       # - name: install zlib
       #   run: |
@@ -46,6 +46,15 @@ jobs:
       
       - name: install ffmpeg
         run: |
+          echo "CONAN_HOME=$(conan config home)" >> $GITHUB_ENV
           conan install --requires ffmpeg/7.1.1 --build=missing -pr ./msvc-x64 -of 1
         shell: bash
         # if: ${{ !always() }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ffmpeg-build-dir
+          compression-level: 0
+          path: |
+            ${{ env.CONAN_HOME }}/p/b/ffmp*/b/build-release
