@@ -7,19 +7,22 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       # - run: where perl
       #   shell: cmd
       # - run: which -a perl
       #   shell: bash
 
-      - uses: actions/checkout@v4
+      # - uses: actions/checkout@v4
       
       - name: install conan
-        uses: conan-io/setup-conan@v1
-        # run: |
-        #   pip install conan
-        #   conan profile detect
+      #   uses: conan-io/setup-conan@v1
+        run: |
+          pip install conan
+          conan profile detect
         # shell: bash
       
       # - name: conan create minizip
@@ -41,21 +44,28 @@ jobs:
       #     conan create recipes/minizip/all --version=1.3.1 -pr ../msvc-x64 --test-folder=
       #   shell: bash
       
-      # - name: install zlib
-      #   run: |
-      #     conan install --requires zlib/1.3.1 --build=missing -pr ./msvc-x64 -of 1
-      
-      - name: install ffmpeg
+      - name: install zlib
         run: |
-          echo "CONAN_HOME=$(conan config home)" >> $GITHUB_ENV
-          conan install --requires ffmpeg/7.1.1 --build="ffmpeg/*" -of 1 # -pr ./msvc-x64
-        shell: bash
-        # if: ${{ !always() }}
+          conan install --requires zlib/1.3.1 --build=missing -of 1
+          
+      - run: |
+          curl -L https://download.qt.io/official_releases/qt/5.15/5.15.16/submodules/qtbase-everywhere-opensource-src-5.15.16.tar.xz \
+            | tar -xf - --xz
+          mkdir build
+          cd build
+          ../qtbase-everywhere-opensource-src-5.15.16/configure
+      
+      # - name: install ffmpeg
+      #   run: |
+      #     echo "CONAN_HOME=$(conan config home)" >> $GITHUB_ENV
+      #     conan install --requires ffmpeg/7.1.1 --build="ffmpeg/*" -of 1 # -pr ./msvc-x64
+      #   shell: bash
+      #   # if: ${{ !always() }}
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ffmpeg-build-dir
-          compression-level: 0
-          path: |
-            ${{ env.CONAN_HOME }}/p/b/ffmp*/b/build-release
+      # - name: Upload artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ffmpeg-build-dir
+      #     compression-level: 0
+      #     path: |
+      #       ${{ env.CONAN_HOME }}/p/b/ffmp*/b/build-release
