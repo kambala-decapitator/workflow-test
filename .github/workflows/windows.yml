@@ -7,9 +7,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    defaults:
-      run:
-        shell: bash
+    #defaults:
+      #run:
+        #shell: bash
     steps:
       # - run: where perl
       #   shell: cmd
@@ -58,8 +58,7 @@ jobs:
       
       - name: install ffmpeg
         run: |
-           echo "CONAN_HOME=$(conan config home)" >> $GITHUB_ENV
-           conan install --requires ffmpeg/7.1.1 --build="ffmpeg/*" -of 1 # -pr ./msvc-x64
+           conan install --requires ffmpeg/7.1.1 --build="ffmpeg/*" -of 1
       #   shell: bash
       #   # if: ${{ !always() }}
 
