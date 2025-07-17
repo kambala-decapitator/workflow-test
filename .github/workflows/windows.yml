@@ -11,56 +11,16 @@ jobs:
       #run:
         #shell: bash
     steps:
+      - run: |
+          ls "C:\Program Files"
+          ls "C:\Program Files (x86)"
+          Get-Command -Name iscc
       # - run: where perl
       #   shell: cmd
       # - run: which -a perl
       #   shell: bash
 
       # - uses: actions/checkout@v4
-      
-      - name: install
-        uses: uilianries/setup-conan@fix-env
-      #   uses: conan-io/setup-conan@v1
-        #run: |
-          #pip install conan
-          #conan profile detect
-        # shell: bash
-      
-      # - name: conan create minizip
-      #   run: |
-      #     cciRepo='conan-center-index'
-      #     branchName='master'
-  
-      #     git clone "https://github.com/conan-io/$cciRepo.git" \
-      #       --branch "$branchName" \
-      #       --no-checkout \
-      #       --depth 1 \
-      #       --no-tags \
-      #       --single-branch \
-      #       --sparse
-      #     cd "$cciRepo"
-      #     git sparse-checkout set recipes/minizip
-      #     git checkout
-
-      #     conan create recipes/minizip/all --version=1.3.1 -pr ../msvc-x64 --test-folder=
-      #   shell: bash
-      
-      #- name: install zlib
-        #run: |
-          #conan install --requires zlib/1.3.1 --build=missing -of 1
-          
-      #- run: |
-          #curl -L https://download.qt.io/official_releases/qt/5.15/5.15.16/submodules/qtbase-everywhere-opensource-src-5.15.16.tar.xz \
-           # | tar -xf - --xz
-          #mkdir build
-          #cd build
-          #../qtbase-everywhere-opensource-src-5.15.16/configure
-      
-      - name: install ffmpeg
-        run: |
-           conan install --requires ffmpeg/7.1.1 --build="ffmpeg/*" -of 1
-      #   shell: bash
-      #   # if: ${{ !always() }}
 
       # - name: Upload artifact
       #   uses: actions/upload-artifact@v4
