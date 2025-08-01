@@ -11,14 +11,10 @@ jobs:
       #run:
         #shell: bash
     steps:
-      - run: |
-          ls "C:\Program Files"
-          ls "C:\Program Files (x86)"
-          Get-Command -Name iscc
-      # - run: where perl
-      #   shell: cmd
-      # - run: which -a perl
-      #   shell: bash
+      - run: where perl
+        shell: cmd
+      - run: which -a perl
+        shell: bash
 
       # - uses: actions/checkout@v4
 
