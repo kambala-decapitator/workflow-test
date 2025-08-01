@@ -15,9 +15,9 @@ jobs:
         # shell: cmd
       - run: |
           winPerl=$(which -a perl | fgrep Strawberry)
-          echo "$(dirname "$winPerl")" >> "$GITHUB_PATH"
+          echo "WINDOWS_PERL=$(dirname "$winPerl")" >> "$GITHUB_ENV"
         shell: bash
-      - run: which -a perl
+      - run: PATH="$WINDOWS_PERL:$PATH" which -a perl
         shell: bash
 
       # - uses: actions/checkout@v4
