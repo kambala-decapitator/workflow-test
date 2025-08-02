@@ -14,7 +14,8 @@ jobs:
       - run: |
           pipx install conan
           conan profile detect
-          conan install --requires sdl/2.32.2 -o 'sdl/*:sdl2main=True' -o 'sdl/*:shared=True'
+          p=sdl/2.32.2
+          conan install --requires $p -b $p -o "$p:sdl2main=True" -o "$p:shared=True"
         shell: bash
 
       # - uses: actions/checkout@v4
