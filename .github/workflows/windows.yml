@@ -6,18 +6,15 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-11-arm
     #defaults:
       #run:
         #shell: bash
     steps:
-      # - run: where perl
-        # shell: cmd
       - run: |
-          winPerl=$(which -a perl | fgrep Strawberry)
-          echo "WINDOWS_PERL=$(dirname "$winPerl")" >> "$GITHUB_ENV"
-        shell: bash
-      - run: PATH="$WINDOWS_PERL:$PATH" which -a perl
+          pipx install conan
+          conan profile detect
+          conan install --requires sdl/2.32.2 -o 'sdl/*:sdl2main=True' -o 'sdl/*:shared=True'
         shell: bash
 
       # - uses: actions/checkout@v4
