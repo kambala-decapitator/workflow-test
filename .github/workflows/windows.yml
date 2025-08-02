@@ -15,7 +15,8 @@ jobs:
           pipx install conan
           conan profile detect
           p=sdl/2.32.2
-          conan install --requires $p -b $p -o "$p:sdl2main=True" -o "$p:shared=True"
+          conan install --requires $p -b $p -o "$p:sdl2main=True" -o "$p:shared=True" \
+            -c "$p:tools.cmake.cmaketoolchain:extra_variables={'SDL_LIBC': 'ON'}"
         shell: bash
 
       # - uses: actions/checkout@v4
