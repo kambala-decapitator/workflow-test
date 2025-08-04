@@ -37,7 +37,8 @@ jobs:
           conan create "recipes/opusfile/all" \
             --version=0.12 \
             --build=missing \
-            --test-folder=
+            --test-folder= \
+            -o 'opusfile/*:http=False'
 
       # - uses: actions/checkout@v4
 
