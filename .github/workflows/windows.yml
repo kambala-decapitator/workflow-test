@@ -14,31 +14,9 @@ jobs:
       - run: |
           pipx install conan
           conan profile detect
-      # - run: |
-      #     p=sdl/2.32.2
-      #     conan install --requires $p -b $p -o "$p:sdl2main=True" -o "$p:shared=True" \
-      #       -c "$p:tools.cmake.cmaketoolchain:extra_variables={'SDL_LIBC': 'ON'}"
       - run: |
-          cciForkRepo='cci-fork'
-          branchName='patch-1'
-  
-          git clone "https://github.com/kambala-decapitator/conan-center-index.git" "$cciForkRepo" \
-            --branch "$branchName" \
-            --no-checkout \
-            --depth 1 \
-            --no-tags \
-            --single-branch \
-            --sparse
-          cd "$cciForkRepo"
-          git sparse-checkout set \
-            recipes/opusfile \
-  
-          git checkout
-          conan create "recipes/opusfile/all" \
-            --version=0.12 \
-            --build=missing \
-            --test-folder= \
-            -o 'opusfile/*:http=False'
+          p=lua/5.4.7
+          conan install --requires $p -b $p -o "$p:compile_as_cpp=True" -o "$p:shared=True"
 
       # - uses: actions/checkout@v4
 
