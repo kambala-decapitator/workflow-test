@@ -11,15 +11,35 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      LISTS_DIR: lists
+      DEPENDENCIES_DIR: deps
 
     steps:
-      - name: asd
+      - name: Download artifacts
+        run: |
+          gh --repo vcmi/vcmi-dependencies run download ${{ github.event.inputs.run_id }} --dir "$LISTS_DIR" --pattern 'list of*'
+          gh --repo vcmi/vcmi-dependencies run download ${{ github.event.inputs.run_id }} --dir "$DEPENDENCIES_DIR" --pattern 'dependencies-*'
+      - name: Create release
         shell: python
         run: |
-          import json
-          from urllib.request import urlopen, urlretrieve
+          from datetime import date
+          from glob import glob
+          from os import getenv
+          from pathlib import Path
+          from subprocess import run
 
-          artifactsUrl = 'https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.event.inputs.run_id }}/artifacts'
-          with urlopen(artifactsUrl) as response:
-              for artifact in json.loads(response.read().decode('utf-8'))['artifacts']:
-                  print(artifact['name'])
+          releaseNotes = "Generated from [this](https://github.com/vcmi/vcmi-dependencies/actions/runs/42) Actions run\n"
+          asd = sorted(Path(".").glob(getenv("LISTS_DIR") + "/**/*.txt"))
+          for packageListPath in asd # sorted(Path(".").glob(getenv("LISTS_DIR") + "/**/*.txt")):
+              releaseNotes += f""" \
+          <details><summary><b>{packageListPath.stem.removeprefix("dependencies-")}</b> packages</summary>
+
+          {open(packageListPath, "r").read()}
+          </details>
+              """
+
+          tag = date.today()
+          dependencies = glob(getenv("DEPENDENCIES_DIR") + "/**/*.tgz")
+          print(["gh", "release", "create", tag, "--prerelease", "--notes", releaseNotes] + dependencies)
+          run(["gh", "release", "create", tag, "--prerelease", "-d", "--notes", releaseNotes] + asd)
