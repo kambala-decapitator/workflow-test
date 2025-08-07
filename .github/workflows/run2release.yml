@@ -33,7 +33,7 @@ jobs:
 
           releaseNotes = "Generated from [this](https://github.com/vcmi/vcmi-dependencies/actions/runs/42) Actions run\n"
           asd = sorted(Path(".").glob(getenv("LISTS_DIR") + "/**/*.txt"))
-          for packageListPath in asd # sorted(Path(".").glob(getenv("LISTS_DIR") + "/**/*.txt")):
+          for packageListPath in asd: # sorted(Path(".").glob(getenv("LISTS_DIR") + "/**/*.txt")):
               releaseNotes += f""" \
           <details><summary><b>{packageListPath.stem.removeprefix("dependencies-")}</b> packages</summary>
 
