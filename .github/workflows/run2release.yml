@@ -20,6 +20,8 @@ jobs:
         run: |
           gh --repo vcmi/vcmi-dependencies run download ${{ github.event.inputs.run_id }} --dir "$LISTS_DIR" --pattern 'list of*'
           gh --repo vcmi/vcmi-dependencies run download ${{ github.event.inputs.run_id }} --dir "$DEPENDENCIES_DIR" --pattern 'dependencies-*'
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Create release
         shell: python
         run: |
