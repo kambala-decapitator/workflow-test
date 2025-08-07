@@ -24,6 +24,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
       - name: Create release
         shell: python
+        env:
+          GH_DEBUG: api
         run: |
           from datetime import date
           from glob import glob
