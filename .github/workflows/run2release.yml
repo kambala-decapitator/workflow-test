@@ -31,7 +31,7 @@ jobs:
           from pathlib import Path
           from subprocess import run
 
-          releaseNotes = "Generated from [this](https://github.com/vcmi/vcmi-dependencies/actions/runs/42) Actions run\n"
+          releaseNotes = "Generated from [this](https://github.com/vcmi/vcmi-dependencies/actions/runs/${{ github.event.inputs.run_id }}) Actions run\n"
           asd = sorted(Path(".").glob(getenv("LISTS_DIR") + "/**/*.txt"))
           for packageListPath in asd: # sorted(Path(".").glob(getenv("LISTS_DIR") + "/**/*.txt")):
               releaseNotes += f""" \
@@ -41,7 +41,7 @@ jobs:
           </details>
               """
 
-          tag = date.today()
+          tag = str(date.today())
           dependencies = glob(getenv("DEPENDENCIES_DIR") + "/**/*.tgz")
           print(["gh", "release", "create", tag, "--prerelease", "--notes", releaseNotes] + dependencies)
           run(["gh", "release", "create", tag, "--prerelease", "-d", "--notes", releaseNotes] + asd)
