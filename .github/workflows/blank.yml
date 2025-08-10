@@ -1,0 +1,17 @@
+name: test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - asd: '["qw", "as", "zx"]'
+
+    steps:
+      - name: Run a multi-line script
+        run: |
+          echo --profile1=${{ join(fromJSON(matrix.asd), ' --profile=') }}
