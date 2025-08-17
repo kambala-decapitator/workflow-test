@@ -6,17 +6,17 @@ on:
 
 jobs:
   build:
-    runs-on: windows-11-arm
+    runs-on: windows-latest
+    # runs-on: windows-11-arm
     defaults:
       run:
         shell: bash
     steps:
       - run: |
-          pipx install conan
-          conan profile detect
+          python3 -c "import os; print(os.path.altsep)"
       - run: |
-          p=lua/5.4.7
-          conan install --requires $p -b $p -o "$p:compile_as_cpp=True" -o "$p:shared=True"
+          python3 -c "import os; print(os.path.altsep)"
+        shell: cmd
 
       # - uses: actions/checkout@v4
 
