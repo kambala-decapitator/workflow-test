@@ -13,9 +13,9 @@ jobs:
         shell: bash
     steps:
       - run: |
-          python3 -c "import os; print(os.path.altsep)"
+          python3 -c "import os; print(os.path.sep, os.path.altsep)"
       - run: |
-          python3 -c "import os; print(os.path.altsep)"
+          python3 -c "import os; print(os.path.sep, os.path.altsep)"
         shell: cmd
 
       # - uses: actions/checkout@v4
