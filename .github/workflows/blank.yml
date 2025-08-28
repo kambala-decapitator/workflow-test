@@ -15,4 +15,5 @@ jobs:
       - name: Run a multi-line script
         run: |
           NDK_VERSION="25.2.9519653"
-          sdkmanager --install "ndk;$NDK_VERSION"
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;$NDK_VERSION"
+          ls -l $ANDROID_HOME/ndk/$NDK_VERSION
