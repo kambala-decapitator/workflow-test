@@ -14,5 +14,5 @@ jobs:
     steps:
       - name: Run a multi-line script
         run: |
-          echo --profile1=${{ join(fromJSON(matrix.asd), ' --profile=') }}
-          apt update
+          NDK_VERSION="25.2.9519653"
+          sdkmanager --install "ndk;$NDK_VERSION"
