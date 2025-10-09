@@ -12,10 +12,12 @@ jobs:
       run:
         shell: bash
     steps:
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+          toolset: 16.0
       - run: |
-          python3 -c "import os; print(os.path.sep, os.path.altsep)"
-      - run: |
-          python3 -c "import os; print(os.path.sep, os.path.altsep)"
+          cl.exe
         shell: cmd
 
       # - uses: actions/checkout@v4
