@@ -13,8 +13,8 @@ jobs:
         shell: bash
     steps:
       - run: |
-          "C:\Program Files (x86)\Microsoft Visual Studio\Installer\setup.exe" modify --passive --norestart `
-            --installPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise" `
+          "C:\Program Files (x86)\Microsoft Visual Studio\Installer\setup.exe" modify --passive --norestart ^
+            --installPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise" ^
             --add Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64
         shell: cmd
       # - run: |
