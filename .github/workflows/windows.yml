@@ -13,22 +13,13 @@ jobs:
         shell: bash
     steps:
       - run: |
-          cl.exe
-          if %ERRORLEVEL% neq 0 (
-            echo Command failed!
-          )
-        shell: cmd
-      - run: |
           "C:\Program Files (x86)\Microsoft Visual Studio\Installer\setup.exe" modify --passive --norestart `
             --installPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise" `
             --add Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64
         shell: powershell
-      - run: |
-          cl.exe
-          if %ERRORLEVEL% neq 0 (
-            echo Command failed!
-          )
-        shell: cmd
+      # - run: |
+      #     cl.exe
+      #   shell: cmd
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
