@@ -20,4 +20,4 @@ jobs:
     steps:
       - name: Run a multi-line script
         run: |
-          echo ${{ format('asd {0}', github.event.inputs.is_draft) }}
+          echo ${{ github.event.inputs.is_draft == 'true' && 1 || 0 }}
