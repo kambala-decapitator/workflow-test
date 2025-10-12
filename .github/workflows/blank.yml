@@ -5,7 +5,7 @@ on:
     inputs:
       is_draft:
         description: 'boolean'
-        required: false
+        required: true
         default: true
         type: boolean
 
@@ -20,5 +20,4 @@ jobs:
     steps:
       - name: Run a multi-line script
         run: |
-          s=${{ github.event.inputs.is_draft == true && '"echo 1"' || '"echo 0"' }}
-          $s
+          echo ${{ format('asd {0}', github.event.inputs.is_draft) }}
