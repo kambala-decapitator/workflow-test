@@ -2,6 +2,12 @@ name: test
 
 on:
   workflow_dispatch:
+    inputs:
+      is_draft:
+        description: 'Actions run ID which to get artifacts from'
+        required: true
+        default: true
+        type: boolean
 
 jobs:
   build:
@@ -14,6 +20,4 @@ jobs:
     steps:
       - name: Run a multi-line script
         run: |
-          NDK_VERSION="25.2.9519653"
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;$NDK_VERSION"
-          ls -l $ANDROID_HOME/ndk/$NDK_VERSION
+          echo "value: ${{ github.event.inputs.is_draft && 1 || 0 }}"
