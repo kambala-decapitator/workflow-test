@@ -20,5 +20,5 @@ jobs:
     steps:
       - name: Run a multi-line script
         run: |
-          s=${{ github.event.inputs.is_draft && 'echo 1' || 'echo 0' }}
+          s=${{ github.event.inputs.is_draft == true && '"echo 1"' || '"echo 0"' }}
           $s
