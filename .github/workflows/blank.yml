@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       is_draft:
-        description: 'Actions run ID which to get artifacts from'
+        description: 'boolean'
         required: true
         default: true
         type: boolean
@@ -20,4 +20,5 @@ jobs:
     steps:
       - name: Run a multi-line script
         run: |
-          echo "value: ${{ github.event.inputs.is_draft && 1 || 0 }}"
+          s=${{ github.event.inputs.is_draft && 'echo 1' || 'echo 0' }}
+          $s
