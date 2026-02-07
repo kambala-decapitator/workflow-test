@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.16.0)
+project(asd LANGUAGES CXX)
+find_package(fmt REQUIRED)
+add_executable(asd main.cpp)
+target_link_libraries(asd PRIVATE fmt::fmt)
