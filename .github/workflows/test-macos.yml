@@ -23,5 +23,9 @@ jobs:
       - name: Run a multi-line script
         run: |
           export DEVELOPER_DIR=/Applications/Xcode_16.2.app
+          brew list
+          ls -l /opt/homebrew/opt
+          brew rm fmt
+
           cmake -S . -B build -G Ninja
           cmake --build build
