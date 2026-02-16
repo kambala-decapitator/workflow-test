@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16.0)
 project(asd LANGUAGES CXX)
 set(a 1 2)
-execute_process(COMMAND bash -c "echo 1: $1 ; echo 2: $2" \"${a}\"
+execute_process(COMMAND bash -c "echo 1: \$1 ; echo 2: \$2" ${a}
   COMMAND_ECHO STDOUT)
 find_package(fmt)
 if (TARGET fmt::fmt)
