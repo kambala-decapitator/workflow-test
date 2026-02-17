@@ -3,7 +3,7 @@ project(asd LANGUAGES CXX)
 #set(a 1 2)
 #execute_process(COMMAND bash -c "echo 1: \$1 ; echo 2: \$2 ; echo 0: \$0" ${a}
 #  COMMAND_ECHO STDOUT)
-find_package(fmt NO_DEFAULT_PATH)
+find_package(fmt) #NO_DEFAULT_PATH
 if (TARGET fmt::fmt)
   message("ok")
 else()
