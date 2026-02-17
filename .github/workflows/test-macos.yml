@@ -26,6 +26,7 @@ jobs:
           #brew list
           #ls -l /opt/homebrew/opt
           brew install fmt
+          env
 
           cmake -S . -B build -G Ninja --debug-find
           cmake --build build
