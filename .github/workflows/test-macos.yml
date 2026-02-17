@@ -27,5 +27,5 @@ jobs:
           #ls -l /opt/homebrew/opt
           brew install fmt
 
-          cmake -S . -B build -G Ninja
+          cmake -S . -B build -G Ninja --debug-find
           cmake --build build
