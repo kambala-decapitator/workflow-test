@@ -28,5 +28,5 @@ jobs:
           brew install fmt
           env
 
-          cmake -S . -B build -G Ninja --debug-find
+          cmake -S . -B build -G Ninja --debug-find-pkg=fmt
           cmake --build build
