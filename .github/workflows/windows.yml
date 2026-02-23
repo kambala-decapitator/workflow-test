@@ -16,8 +16,8 @@ jobs:
           pip install conan
           conan profile detect
           set -x
-          conan download "onnx/1.16.2#4a04f9b46667120c6db25d1a207172bd"
-          conan download "onnx/1.16.2#b380f30b8d3e38d38fb8af64e6f24ae4"
+          conan download -r conancenter "onnx/1.16.2#4a04f9b46667120c6db25d1a207172bd"
+          conan download -r conancenter "onnx/1.16.2#b380f30b8d3e38d38fb8af64e6f24ae4"
         #shell: cmd
 
       # - uses: actions/checkout@v4
