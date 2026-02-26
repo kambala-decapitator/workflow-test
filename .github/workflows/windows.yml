@@ -15,14 +15,18 @@ jobs:
       - run: |
           pip install conan
           conan profile detect
-          echo "
+          echo '
           [conf]
           tools.microsoft.bash:path=C:\msys64\usr\bin\bash.exe
-          tools.microsoft.bash:subsystem=msys2" >> $(conan profile path default)
+          tools.microsoft.bash:subsystem=msys2' >> $(conan profile path default)
 
           #cd C:\msys64\usr\bin
           C:\msys64\usr\bin\bash.exe -l -c "pacman -S base-devel gcc --noconfirm"
-        #shell: cmd
+
+      - run: |
+          #cd C:\msys64\usr\bin
+          C:\msys64\usr\bin\bash.exe -l -c "pacman -S base-devel gcc --noconfirm"
+        shell: cmd
 
       - name: Checkout
         uses: actions/checkout@v6.0.2
