@@ -15,8 +15,12 @@ jobs:
       - run: |
           pip install conan
           conan profile detect
+          echo "
+          [conf]
+          tools.microsoft.bash:path=C:\msys64\usr\bin\bash.exe
+          tools.microsoft.bash:subsystem=msys2" >> $(conan profile path default)
         #shell: cmd
-        
+
       - name: Checkout
         uses: actions/checkout@v6.0.2
         with:
