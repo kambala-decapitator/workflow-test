@@ -19,6 +19,9 @@ jobs:
           [conf]
           tools.microsoft.bash:path=C:\msys64\usr\bin\bash.exe
           tools.microsoft.bash:subsystem=msys2" >> $(conan profile path default)
+
+          #cd C:\msys64\usr\bin
+          C:\msys64\usr\bin\bash.exe -l -c "pacman -S base-devel gcc --noconfirm"
         #shell: cmd
 
       - name: Checkout
