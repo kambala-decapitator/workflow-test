@@ -17,7 +17,8 @@ jobs:
           conan profile detect
           echo '
           [conf]
-          tools.microsoft.bash:path=C:\msys64\usr\bin\bash.exe
+          #tools.microsoft.bash:path=C:\msys64\usr\bin\bash.exe
+          tools.microsoft.bash:path=C:\Program Files\Git\bin\bash.exe
           tools.microsoft.bash:subsystem=msys2
           
           [platform_tool_requires]
@@ -31,20 +32,20 @@ jobs:
           strawberryperl/*: strawberryperl/5.32.1' >> $(conan profile path default)
 
       - run: |
-          C:\msys64\usr\bin\bash.exe -l -c "pacman -S base-devel gcc --noconfirm"
+          rem C:\msys64\usr\bin\bash.exe -l -c "pacman -S base-devel gcc --noconfirm"
         shell: cmd
 
-      # - name: Checkout
-      #   uses: actions/checkout@v6.0.2
-      #   with:
-      #     repository: kambala-decapitator/conan-center-index
-      #     ref: package/libvpx
-      #     path: cci
-      #     sparse-checkout: recipes/libvpx
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          repository: kambala-decapitator/conan-center-index
+          ref: package/libvpx
+          path: cci
+          sparse-checkout: recipes/libvpx
 
       - run: |
-          # conan create cci/recipes/libvpx/all --version 1.16.0 -b missing
-          conan install --require nasm/2.16.01 -b 'nasm/*'
+          conan create cci/recipes/libvpx/all --version 1.16.0 -b missing
+          # conan install --require nasm/2.16.01 -b 'nasm/*'
 
       # - uses: actions/checkout@v6
 
