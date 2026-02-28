@@ -43,7 +43,7 @@ jobs:
           sparse-checkout: recipes/libvpx
 
       - run: |
-          conan create cci/recipes/libvpx/all --version 1.16.0 -b missing -c:b 'tools.microsoft.bash:path=C:\msys64\usr\bin\bash.exe' -c:b 'tools.microsoft.bash:subsystem=msys2'
+          conan create cci/recipes/libvpx/all --version 1.16.0 -b missing -c 'tools.microsoft.bash:path=C:\msys64\usr\bin\bash.exe' -c 'tools.microsoft.bash:subsystem=msys2'
           # conan install --require nasm/2.16.01 -b 'nasm/*'
 
       # - uses: actions/checkout@v6
