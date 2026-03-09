@@ -11,7 +11,10 @@ jobs:
       - run: |
           pip install conan
           conan profile detect
-          conan install -of 1 --requires xkbcommon/1.13.1 -b xkbcommon/1.13.1 -b wayland/1.24.0 -o 'libiconv/*:shared=True' \
+
+          xkbVersion=1.13.1
+          #xkbVersion=1.6.0
+          conan install -of 1 --requires xkbcommon/$xkbVersion -b xkbcommon/$xkbVersion -b wayland/1.24.0 -o 'libiconv/*:shared=True' \
             -c tools.system.package_manager:mode=install -c tools.system.package_manager:sudo=True
 
       - name: conan list
