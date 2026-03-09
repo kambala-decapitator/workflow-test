@@ -11,43 +11,16 @@ jobs:
       - run: |
           pip install conan
           conan profile detect
-          conan install --requires freetype/2.13.2 -pr default -b missing --lockfile-out conan.lock -of 1
+          conan install --requires xkbcommon/1.6.0 -b xkbcommon/1.6.0 -of 1 -o 'libiconv/*:shared=True'
 
-      - name: Run conan
-        shell: bash
+      - name: conan list
+        #shell: bash
         run: |
           set -x
           conan list -f compact | tail -n +2
-          # --filter=context
-          conan graph info --requires freetype/2.13.2 -pr default -f json --build=never --no-remote > graph_context.json
-          #cat graph_context.json
-          conan list \
-            --graph=graph_context.json \
-            --graph-context=build-only \
-            --format=json \
-            > pkglist.json
-          exit 0
-          buildPackages=$(jq -rb '.graph.nodes[] | select(.context == "build") | .ref' graph_context.json | sort | uniq)
-          printf '%s' $buildPackages | xxd
-          printf '%s' "$buildPackages" | xxd
-          for p in $buildPackages ; do
-            echo "'$p'"
-            conan remove --confirm "$p:*"
-          done
-
-          #conan graph info --requires freetype/2.13.2 -f json --build=never --out-file graph.json --no-remote
-          #jq -c 'del(.graph.nodes[] | select(.context == "host"))' graph.json > graph_build.json
-          #conan list -f json --out-file list.json -c -g graph_build.json
-          #conan remove --confirm -l list.json
-          conan cache clean
-          conan cache save --file cache_all.tgz '*:*'
-
-          #jq -c 'del(.graph.nodes[] | select(.context == "build"))' graph.json > graph_host.json
-          #conan list -f json --out-file list.json -c -g graph_host.json
-          #conan cache save --file cache_all.tgz -l list.json
 
       - name: Upload a Build Artifact
-        if: always()
+        if: false
         uses: actions/upload-artifact@v4.6.1
         with:
           path: |
