@@ -24,7 +24,9 @@ jobs:
         run: |
           pipx install conan
           conan profile detect
-          conan install --requires qt/5.15.19 -o 'qt/*:opengl=es2' -b missing -s os=iOS -s os.sdk=iphoneos -s os.version=15.0 -of 1
+          conan install --requires qt/5.15.19 \
+            -o 'qt/*:opengl=es2' -o 'qt/*:with_mysql=False' -o 'qt/*:with_odbc=False' -o 'qt/*:with_openal=False' -o 'qt/*:with_pq=False' \
+            -b missing -s os=iOS -s os.sdk=iphoneos -s os.version=15.0 -of 1
       - uses: actions/upload-artifact@v7
         with:
           name: qt-ios
