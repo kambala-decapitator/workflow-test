@@ -16,18 +16,23 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # - name: Checkout
-        # uses: actions/checkout@v6
-        
+      - name: Checkout
+        uses: actions/checkout@latest
+        with:
+          repository: xbmc/xbmc
+
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          pipx install conan
-          conan profile detect
-          conan install --requires qt/5.15.19 \
-            -o 'qt/*:opengl=es2' -o 'qt/*:with_mysql=False' -o 'qt/*:with_odbc=False' -o 'qt/*:with_openal=False' -o 'qt/*:with_pq=False' \
-            -b missing -s os=iOS -s os.sdk=iphoneos -s os.version=15.0 -s arch=armv8 -of 1
-      - uses: actions/upload-artifact@v7
-        with:
-          name: qt-ios
-          path: ~/.conan2/p/b/qt*
+          cd tools/depends
+          ./bootstrap
+          ./configure --host=x86_64-apple-darwin --with-platform=macos --disable-ccache
+          # pipx install conan
+          # conan profile detect
+          # conan install --requires qt/5.15.19 \
+          #   -o 'qt/*:opengl=es2' -o 'qt/*:with_mysql=False' -o 'qt/*:with_odbc=False' -o 'qt/*:with_openal=False' -o 'qt/*:with_pq=False' \
+          #   -b missing -s os=iOS -s os.sdk=iphoneos -s os.version=15.0 -s arch=armv8 -of 1
+      # - uses: actions/upload-artifact@v7
+      #   with:
+      #     name: qt-ios
+      #     path: ~/.conan2/p/b/qt*
