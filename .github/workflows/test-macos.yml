@@ -12,7 +12,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: macos-latest
+    runs-on: macos-15-arm64
     # runs-on: macos-26-intel
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -27,6 +27,7 @@ jobs:
         run: |
           brew install autoconf m4
           cd tools/depends
+          #export DEVELOPER_DIR=/Applications/Xcode_16.3.app
           PATH="$(brew --prefix autoconf)/bin:$(brew --prefix m4)/bin:$PATH" ./bootstrap
           ./configure --host=$(uname -m)-apple-darwin --with-platform=macos --disable-ccache
           # pipx install conan
