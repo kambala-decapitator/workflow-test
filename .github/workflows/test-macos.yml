@@ -26,9 +26,8 @@ jobs:
       - name: Run a multi-line script
         run: |
           brew install autoconf m4
-          uname -m
           cd tools/depends
-          ./bootstrap
+          PATH="$(brew --prefix autoconf)/bin:$(brew --prefix m4)/bin:$PATH" ./bootstrap
           ./configure --host=$(uname -m)-apple-darwin --with-platform=macos --disable-ccache
           # pipx install conan
           # conan profile detect
