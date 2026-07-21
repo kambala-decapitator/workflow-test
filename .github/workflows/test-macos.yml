@@ -12,7 +12,8 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: macos-26-intel
+    runs-on: macos-latest
+    # runs-on: macos-26-intel
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -24,9 +25,11 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
+          brew install autoconf m4
+          uname -m
           cd tools/depends
           ./bootstrap
-          ./configure --host=x86_64-apple-darwin --with-platform=macos --disable-ccache
+          ./configure --host=$(uname -m)-apple-darwin --with-platform=macos --disable-ccache
           # pipx install conan
           # conan profile detect
           # conan install --requires qt/5.15.19 \
