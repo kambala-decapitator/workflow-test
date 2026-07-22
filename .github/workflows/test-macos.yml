@@ -26,7 +26,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           # brew install autoconf m4
-          brew rm autoconf automake m4
+          brew rm --ignore-dependencies autoconf automake m4 libtool
           # export DEVELOPER_DIR=/Applications/Xcode_16.3.app
 
           cd tools/depends
