@@ -36,11 +36,6 @@ jobs:
           ./configure --host=aarch64-apple-darwin --with-platform=ios --disable-ccache
           make -j$(sysctl -n hw.ncpu) -C native
 
-          #buildDir='${{ runner.temp }}/build'
-          #make -C target/cmakebuildsys BUILD_DIR="$buildDir"
-          #cd "$buildDir"
-          #xcodebuild -scheme build-ffmpeg
-
           # pipx install conan
           # conan profile detect
           # conan install --requires qt/5.15.19 \
@@ -51,6 +46,15 @@ jobs:
         run: |
           cd tools/depends
           make -j$(sysctl -n hw.ncpu) -C target gettext
+          make -j$(sysctl -n hw.ncpu) -C target
+
+      - name: ffmpeg
+        run: |
+          cd tools/depends
+          buildDir='${{ runner.temp }}/build'
+          make -C target/cmakebuildsys BUILD_DIR="$buildDir"
+          cd "$buildDir"
+          xcodebuild -scheme build-ffmpeg
 
       # - uses: actions/upload-artifact@v7
       #   with:
