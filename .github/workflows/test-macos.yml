@@ -36,17 +36,18 @@ jobs:
           ./configure --host=aarch64-apple-darwin --with-platform=ios --disable-ccache
           make -j$(sysctl -n hw.ncpu) -C native
 
-          buildDir='${{ runner.temp }}/build'
-          make -C target/cmakebuildsys BUILD_DIR="$buildDir"
-          cd "$buildDir"
-          xcodebuild -scheme build-ffmpeg
+          #buildDir='${{ runner.temp }}/build'
+          #make -C target/cmakebuildsys BUILD_DIR="$buildDir"
+          #cd "$buildDir"
+          #xcodebuild -scheme build-ffmpeg
+
           # pipx install conan
           # conan profile detect
           # conan install --requires qt/5.15.19 \
           #   -o 'qt/*:opengl=es2' -o 'qt/*:with_mysql=False' -o 'qt/*:with_odbc=False' -o 'qt/*:with_openal=False' -o 'qt/*:with_pq=False' \
           #   -b missing -s os=iOS -s os.sdk=iphoneos -s os.version=15.0 -s arch=armv8 -of 1
 
-      - name: native
+      - name: target
         run: |
           cd tools/depends
           make -j$(sysctl -n hw.ncpu) -C target gettext
