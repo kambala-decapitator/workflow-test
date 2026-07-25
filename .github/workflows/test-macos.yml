@@ -20,7 +20,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          repository: xbmc/xbmc
+          repository: kambala-decapitator/xbmc
+          ref: ios-build-fixes
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
