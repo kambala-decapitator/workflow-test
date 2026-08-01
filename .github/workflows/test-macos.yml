@@ -29,7 +29,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           # brew install autoconf m4
-          brew rm --ignore-dependencies autoconf m4 libtool
+          # brew rm --ignore-dependencies autoconf m4 libtool
 
           cd tools/depends
           # PATH="$(brew --prefix autoconf)/bin:$(brew --prefix m4)/bin:$PATH" ./bootstrap
