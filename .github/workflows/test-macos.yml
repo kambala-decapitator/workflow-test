@@ -13,17 +13,17 @@ jobs:
   build:
     # The type of runner that the job will run on
     # runs-on: macos-15
-    runs-on: macos-26-intel
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_26.6.app
+    runs-on: xcode-27
+    # env:
+      # DEVELOPER_DIR: /Applications/Xcode_26.6.app
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          repository: kambala-decapitator/xbmc
-          ref: ios-build-fixes
+          repository: xbmc/xbmc
+          # ref: ios-build-fixes
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
