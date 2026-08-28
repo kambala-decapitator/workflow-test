@@ -13,8 +13,10 @@ jobs:
         shell: bash
     steps:
       - run: |
-          ls -lR /c/"Program Files (x86)/Windows Kits"/10/Debuggers
-          which cdb
+          "/c/Program Files (x86)/Windows Kits/10/Debuggers/cdb.exe" \
+            -z crash.dmp \
+            -y "D:\build\pdb;D:\build\bin" \
+            -c ".sympath; .reload /f; !analyze -v; ~* kv; lm; q"
       # - run: |
       #     pip install conan
       #     conan profile detect
