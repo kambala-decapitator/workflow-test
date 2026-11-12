@@ -11,6 +11,6 @@ jobs:
       - name: Run a multi-line script
         run: |
           set -x
-          pipx install conan --output json
-          pipx list conan
-          pipx list conan --output json
+          pipx install conan
+          a=$(which conan)
+            ls -l $a/../../lib
