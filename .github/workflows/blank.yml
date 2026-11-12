@@ -12,5 +12,8 @@ jobs:
         run: |
           set -x
           pipx install conan
-          ls -l $PIPX_HOME/venvs/conan/lib
+          $PIPX_HOME/venvs/conan/bin/python -c "
+from conan.api.conan_api import ConanAPI
+api = ConanAPI()
+"
             #pipx environment
