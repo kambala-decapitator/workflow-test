@@ -12,5 +12,6 @@ jobs:
         run: |
           set -x
           pipx install conan
-          echo $PIPX_HOME
-            pipx environment
+            echo $PIPX_LOCAL_VENVS
+          ls -l $PIPX_HOME/venvs
+            #pipx environment
