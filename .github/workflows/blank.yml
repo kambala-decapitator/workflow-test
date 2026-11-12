@@ -12,5 +12,5 @@ jobs:
         run: |
           set -x
           pipx install conan
-          a=$(which conan)
-            ls -l $a/../../lib
+          echo $PIPX_HOME
+            pipx environment
