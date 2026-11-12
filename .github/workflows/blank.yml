@@ -2,22 +2,15 @@ name: test
 
 on:
   workflow_dispatch:
-    inputs:
-      is_draft:
-        description: 'boolean'
-        required: true
-        default: true
-        type: boolean
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - asd: '["qw", "as", "zx"]'
 
     steps:
       - name: Run a multi-line script
         run: |
-          echo ${{ github.event.inputs.is_draft == 'true' && 1 || 0 }}
+          set -x
+          pipx install conan --output json
+          pipx list conan
+          pipx list conan --output json
